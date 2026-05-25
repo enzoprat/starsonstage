@@ -28,20 +28,62 @@ export function ContactForm() {
     setStatus("loading");
     setErrorMsg(null);
     try {
-      const res = await fetch("/api/contact", {
+      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+      if (!accessKey) {
+        throw new Error(
+          "Clé Web3Forms manquante. Définissez NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY.",
+        );
+      }
+
+      const fd = new FormData();
+      fd.append("access_key", accessKey);
+      fd.append(
+        "subject",
+        `Nouvelle demande de booking — ${data.organization} (${data.eventType})`,
+      );
+      fd.append("from_name", `${data.firstName} ${data.lastName}`);
+      fd.append("email", data.email);
+      fd.append("replyto", data.email);
+      fd.append("Prénom", data.firstName);
+      fd.append("Nom", data.lastName);
+      fd.append("Téléphone", data.phone);
+      fd.append("Organisation", data.organization);
+      fd.append("Type d'événement", data.eventType);
+      fd.append("Ville", data.city);
+      fd.append("Date", data.date);
+      fd.append("Budget", data.budget);
+      fd.append("Style recherché", data.style);
+      fd.append(
+        "message",
+        [
+          `Prénom : ${data.firstName}`,
+          `Nom : ${data.lastName}`,
+          `Email : ${data.email}`,
+          `Téléphone : ${data.phone}`,
+          `Organisation : ${data.organization}`,
+          `Type d'événement : ${data.eventType}`,
+          `Ville : ${data.city}`,
+          `Date : ${data.date}`,
+          `Budget : ${data.budget}`,
+          `Style : ${data.style}`,
+          `Message : ${data.message || "(vide)"}`,
+        ].join("\n"),
+      );
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: fd,
       });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body?.error || "Erreur lors de l’envoi");
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || result?.success === false) {
+        throw new Error(result?.message || "Erreur lors de l’envoi");
       }
       setStatus("success");
       reset();
-    } catch (e: any) {
+    } catch (e: unknown) {
       setStatus("error");
-      setErrorMsg(e?.message ?? "Une erreur est survenue.");
+      const msg = e instanceof Error ? e.message : "Une erreur est survenue.";
+      setErrorMsg(msg);
     }
   };
 

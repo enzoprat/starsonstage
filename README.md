@@ -69,23 +69,24 @@ starsonstage/
 
 ---
 
-## Brancher le formulaire de contact
+## Formulaire de contact (Web3Forms)
 
-L'API route `/api/contact` valide les données avec Zod, puis logge la demande côté serveur en attendant un provider. Pour l'activer en prod, ouvrez [`src/app/api/contact/route.ts`](src/app/api/contact/route.ts) — les commentaires en tête expliquent les 2 options :
+Le formulaire envoie **directement** vers l'API Web3Forms côté client (c'est la manière nominale d'utiliser Web3Forms et cela évite les blocages Cloudflare sur les appels server-to-server).
 
-### Option 1 — Resend (recommandé)
+### Variable d'env requise
 
 ```bash
-npm i resend
+# .env.local (local) — et également dans Vercel → Settings → Environment Variables
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=votre-cle-web3forms
 ```
 
-Ajoutez `RESEND_API_KEY` dans Vercel (Environment Variables) et décommentez le bloc Resend dans la route.
+Le préfixe `NEXT_PUBLIC_` est **obligatoire** pour que la clé soit accessible côté navigateur. La clé Web3Forms est conçue pour être publique — elle identifie l'inbox de destination, pas un compte sensible.
 
-### Option 2 — Web3Forms
+L'inbox de destination est configurée directement dans le dashboard Web3Forms (email : **nicolas@starsonstage.fr**).
 
-Ajoutez `WEB3FORMS_ACCESS_KEY` dans Vercel et décommentez le bloc Web3Forms.
+### Basculer vers un provider serveur (Resend, SMTP…)
 
-Email de destination par défaut : **nicolas@starsonstage.fr**.
+Si vous préférez envoyer les emails depuis le serveur (ex: pour ajouter un anti-spam custom), la route [`src/app/api/contact/route.ts`](src/app/api/contact/route.ts) est laissée en place comme point d'entrée prêt à brancher Resend ou similaire. Voir les commits précédents pour un exemple de wiring server-side.
 
 ---
 

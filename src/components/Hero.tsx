@@ -16,7 +16,7 @@ export function Hero() {
   return (
     <section
       id="accueil"
-      className="relative isolate overflow-hidden pt-[140px] pb-24 md:pt-[180px] md:pb-32"
+      className="relative isolate overflow-hidden pt-[160px] pb-24 md:pt-[200px] md:pb-32"
     >
       {/* Floating format cards (hidden on small screens) */}
       <div aria-hidden className="pointer-events-none absolute inset-0 hidden md:block">
