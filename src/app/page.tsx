@@ -11,12 +11,14 @@ import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
 import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import { CursorSpotlight } from "@/components/ui/Spotlight";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 
 export default function Page() {
   return (
     <main className="relative min-h-screen overflow-hidden text-bone">
       <BackgroundFX />
       <CursorSpotlight />
+      <ScrollProgress />
       <Header />
       <Hero />
       <SocialProof />

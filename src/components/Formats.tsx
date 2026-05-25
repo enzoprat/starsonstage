@@ -46,7 +46,7 @@ export function Formats() {
                 transition={{ delay: i * 0.06, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="group relative"
               >
-                <div className="hairline relative overflow-hidden rounded-3xl bg-ink-900">
+                <div className="hairline hairline-rotate relative overflow-hidden rounded-3xl bg-ink-900">
                   {/* visual */}
                   <div className={`relative aspect-[16/9] w-full bg-gradient-to-br ${v.grad}`}>
                     <div

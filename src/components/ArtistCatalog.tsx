@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { genres } from "@/data/content";
 import { SectionHeader } from "./ui/SectionHeader";
+import { MagneticCTA } from "./ui/MagneticCTA";
 
 const palettes = [
   "from-violet-neon/40 via-violet-neon/10",
@@ -38,7 +38,7 @@ export function ArtistCatalog() {
               style={{ transformPerspective: 900 }}
               className="group relative"
             >
-              <div className="hairline relative aspect-[3/4] overflow-hidden rounded-3xl bg-ink-900">
+              <div className="hairline hairline-rotate relative aspect-[3/4] overflow-hidden rounded-3xl bg-ink-900">
                 {/* gradient backdrop */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${palettes[i % palettes.length]} to-ink-950`}
@@ -88,10 +88,10 @@ export function ArtistCatalog() {
         </div>
 
         <div className="mt-14 flex flex-col items-center gap-3 text-center">
-          <Link href="#contact" className="btn-primary">
+          <MagneticCTA href="#contact">
             Recevoir une sélection d’artistes
             <ArrowRight />
-          </Link>
+          </MagneticCTA>
           <p className="text-xs text-chrome/60">
             Le catalogue complet est communiqué sur demande, après brief de votre événement.
           </p>

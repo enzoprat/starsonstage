@@ -15,6 +15,10 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }
@@ -38,6 +42,13 @@ body {
   border: 2px solid #080808;
 }
 
+/* Conic gradient property registration for animation */
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 @layer components {
   .container-page {
     @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
@@ -50,6 +61,28 @@ body {
   .text-gradient-neon {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(120deg, #F5F2EA 0%, #8B5CF6 45%, #EC4899 75%, #D6B56D 100%);
+  }
+
+  /* Shimmer sweep over text */
+  .text-shimmer {
+    background: linear-gradient(
+      110deg,
+      #F5F2EA 0%,
+      #F5F2EA 40%,
+      #EC4899 50%,
+      #F5F2EA 60%,
+      #F5F2EA 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: text-shimmer 5s linear infinite;
+  }
+
+  @keyframes text-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
 
   .glass {
@@ -66,6 +99,7 @@ body {
     -webkit-backdrop-filter: blur(18px);
   }
 
+  /* Static neon hairline */
   .hairline {
     position: relative;
   }
@@ -82,32 +116,159 @@ body {
     pointer-events: none;
   }
 
-  .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide text-bone transition-all duration-300;
-    background: linear-gradient(120deg, #8B5CF6 0%, #EC4899 100%);
-    box-shadow: 0 10px 40px -10px rgba(236, 72, 153, 0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+  /* Rotating conic neon border */
+  .hairline-rotate {
+    position: relative;
+    isolation: isolate;
   }
-  .btn-primary:hover {
-    box-shadow: 0 14px 48px -8px rgba(236, 72, 153, 0.75), inset 0 1px 0 rgba(255,255,255,0.25);
-    transform: translateY(-1px);
+  .hairline-rotate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      transparent 0deg,
+      rgba(139,92,246,0.8) 60deg,
+      rgba(236,72,153,0.9) 120deg,
+      rgba(214,181,109,0.6) 180deg,
+      transparent 240deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    animation: spin-conic 6s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
   }
-  .btn-primary:active {
-    transform: translateY(0);
+  .hairline-rotate:hover::before,
+  .group:hover .hairline-rotate::before {
+    opacity: 1;
   }
 
+  @keyframes spin-conic {
+    to { --angle: 360deg; }
+  }
+
+  /* ============================
+     PREMIUM CTA — PRIMARY
+     ============================ */
+  .btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.85rem 1.6rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #F5F2EA;
+    background: linear-gradient(120deg, #8B5CF6 0%, #EC4899 100%);
+    box-shadow:
+      0 10px 40px -10px rgba(236, 72, 153, 0.55),
+      inset 0 1px 0 rgba(255,255,255,0.18);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+    overflow: hidden;
+    isolation: isolate;
+    z-index: 0;
+  }
+  /* Sheen sweep */
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: -50% -10%;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255,255,255,0.55) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .btn-primary > * { position: relative; z-index: 2; }
+  .btn-primary:hover {
+    box-shadow:
+      0 18px 56px -8px rgba(236, 72, 153, 0.78),
+      0 0 0 1px rgba(255,255,255,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+  }
+  .btn-primary:hover::before {
+    transform: translateX(100%);
+  }
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* ============================
+     PREMIUM CTA — GHOST (glass)
+     ============================ */
   .btn-ghost {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide text-bone transition-all duration-300;
-    background: rgba(255,255,255,0.03);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.85rem 1.6rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #F5F2EA;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
     border: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 6px 24px -10px rgba(0,0,0,0.5);
+    transition: background 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-ghost::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(139,92,246,0), rgba(236,72,153,0));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease, background 0.45s ease;
   }
   .btn-ghost:hover {
     background: rgba(255,255,255,0.07);
     border-color: rgba(255,255,255,0.22);
+    transform: translateY(-1px);
+  }
+  .btn-ghost:hover::before {
+    opacity: 1;
+    background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(236,72,153,0.5));
+  }
+  .btn-ghost:active {
+    transform: translateY(0) scale(0.98);
   }
 
   .chip {
     @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium text-chrome backdrop-blur;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+  }
+  .chip:hover {
+    border-color: rgba(236, 72, 153, 0.4);
+    color: #F5F2EA;
+    background: rgba(255,255,255,0.05);
   }
 
   .section-title {
@@ -127,6 +288,27 @@ body {
     border-radius: 9999px;
     filter: blur(80px);
     opacity: 0.55;
+  }
+
+  /* Animated underline appearing on links */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #EC4899, transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
   }
 }
 
@@ -149,5 +331,11 @@ body {
     opacity: 0.4;
     mix-blend-mode: overlay;
     pointer-events: none;
+  }
+
+  /* Scroll progress bar — width is set inline via state */
+  .scroll-progress {
+    background: linear-gradient(90deg, #8B5CF6, #EC4899, #D6B56D);
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.7);
   }
 }
