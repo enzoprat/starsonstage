@@ -11,7 +11,7 @@ export const eventTypes = [
 ] as const;
 
 export const musicStyles = [
-  "Rap",
+  "Urbain",
   "Afro",
   "Drill",
   "Trap",

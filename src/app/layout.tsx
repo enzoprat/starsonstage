@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "agence de booking",
     "DJ set",
     "showcase",
-    "rap",
+    "urbain",
     "afro",
     "drill",
     "club",

@@ -80,7 +80,7 @@ export const audiences = [
 ];
 
 export const genres = [
-  { name: "Rap / Urbain", tag: "Top demand" },
+  { name: "Urbain", tag: "Top demand" },
   { name: "Afro", tag: "Dancefloor" },
   { name: "Drill", tag: "Underground" },
   { name: "Trap", tag: "Club ready" },
@@ -170,7 +170,7 @@ export const formats = [
 export const faqs = [
   {
     q: "Quel type d’artistes proposez-vous ?",
-    a: "Nous disposons d’un large catalogue d’artistes couvrant différents styles : rap, DJ, afro, drill, trap, house, club et formats événementiels. Les propositions sont adaptées à votre public, votre budget, votre date et votre lieu.",
+    a: "Nous disposons d’un large catalogue d’artistes couvrant différents styles : urbain, DJ, afro, drill, trap, house, club et formats événementiels. Les propositions sont adaptées à votre public, votre budget, votre date et votre lieu.",
   },
   {
     q: "Travaillez-vous uniquement avec des clubs ?",

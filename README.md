@@ -1,6 +1,6 @@
 # Stars On Stage
 
-Landing page premium pour Stars On Stage, agence de booking d'artistes (rap, afro, drill, trap, house, DJ, showcases) pour clubs, bars, plages, BDE, événements privés, festivals et corporate.
+Landing page premium pour Stars On Stage, agence de booking d'artistes (urbain, afro, drill, trap, house, DJ, showcases) pour clubs, bars, plages, BDE, événements privés, festivals et corporate.
 
 Stack : **Next.js 14 (App Router) · TypeScript · Tailwind CSS · Framer Motion · React Hook Form + Zod**.
 

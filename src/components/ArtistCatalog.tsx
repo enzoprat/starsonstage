@@ -23,7 +23,7 @@ export function ArtistCatalog() {
         <SectionHeader
           eyebrow="Catalogue"
           title="Un réseau d’artistes pensé pour votre public."
-          description="Rap, afro, drill, trap, house, DJ sets, showcases club ou formats privés : nous sélectionnons les artistes selon votre lieu, votre audience, votre budget et votre objectif de remplissage."
+          description="Urbain, afro, drill, trap, house, DJ sets, showcases club ou formats privés : nous sélectionnons les artistes selon votre lieu, votre audience, votre budget et votre objectif de remplissage."
         />
 
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
