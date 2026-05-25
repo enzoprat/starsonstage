@@ -28,6 +28,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# but keep production env tracked (only contains public Web3Forms key)
+!.env.production
+
 # vercel
 .vercel
 
